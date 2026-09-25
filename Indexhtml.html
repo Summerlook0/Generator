@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Celebrity Generator</title>
+<!-- Include Puter.js for free zero-config AI access -->
+<script src="https://js.puter.com/v2/"></script>
+<style>
+body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+#output { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 15px; border-radius: 5px; }
+</style>
+</head>
+<body>
+
+<h2>Dynamic Celebrity Generator</h2>
+<button onclick="generateCelebrity()">Generate Profile</button>
+<div id="output">Click the button to start...</div>
+
+<script>
+// Your pool of names
+const celebPool = [
+"Lexi Lore",
+"Abella Danger",
+"Riley Reid",
+"Angela White"
+ ];
+
+async function generateCelebrity() {
+const outputDiv = document.getElementById("output");
+
+// 1. Pick a random name from your list
+const randomName = celebPool[Math.floor(Math.random() * celebPool.length)];
+
+outputDiv.innerHTML = "Consulting AI knowledge base for <b>" + randomName + "</b>...";
+
+try {
+// 2. Query Puter's free AI to dynamically write a description
+// It uses a fast default model automatically
+const response = જણાવ = await puter.ai.chat(
+Write a short, engaging creative profile and physical description for adult film star ${randomName}. Keep it safe for work and tasteful.`
+);
+
+// 3. Display the result
+outputDiv.innerHTML = <h3&gt;${randomName}</h3><p>${response}</p>`;
+
+} catch (error) {
+outputDiv.innerHTML = "Error generating profile. Make sure you sign in to Puter if prompted.";
+console.error(error);
+}
+}
+</script>
+</body>
+</html>
