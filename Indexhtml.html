@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Celebrity Generator</title>
-<!-- Include Puter.js for free zero-config AI access -->
-<script src="https://js.puter.com/v2/"></script>
-<style>
-body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
-button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-#output { margin-top: 20px; white-space: pre-wrap; background: #f4f4f4; padding: 15px; border-radius: 5px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Celebrity Generator</title>
+    <script src="https://js.puter.com/v2/"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; line-height: 1.6; background: #121212; color: #e0e0e0; }
+        button { padding: 12px 24px; font-size: 16px; cursor: pointer; background: #6200ee; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #3700b3; }
+        #output { margin-top: 20px; white-space: pre-wrap; background: #1e1e1e; padding: 20px; border-radius: 6px; border: 1px solid #333; }
+    </style>
 </head>
 <body>
 
-<h2>Dynamic Celebrity Generator</h2>
-<button onclick="generateCelebrity()">Generate Profile</button>
-<div id="output">Click the button to start...</div>
+    <h2>Dynamic Celebrity Generator</h2>
+    <button onclick="generateCelebrity()">Generate Profile</button>
+    <div id="output">Click the button to start...</div>
 
-<script>
-// Your pool of names
-const celebPool = [
-"Lexi Lore",
-"Abella Danger",
-"Riley Reid",
-"Angela White"
- ];
+    <script>
+        const celebPool = [
+            "Lexi Lore",
+            "Abella Danger",
+            "Riley Reid",
+            "Angela White"
+        ];
 
-async function generateCelebrity() {
-const outputDiv = document.getElementById("output");
+        async function generateCelebrity() {
+            const outputDiv = document.getElementById("output");
+            const randomName = celebPool[Math.floor(Math.random() * celebPool.length)];
+            
+            outputDiv.innerHTML = "Consulting AI knowledge base for <b>" + randomName + "</b>...";
 
-// 1. Pick a random name from your list
-const randomName = celebPool[Math.floor(Math.random() * celebPool.length)];
+            try {
+                const response = await puter.ai.chat(
+                    `Write a short, engaging creative profile and physical description for adult film star ${randomName}. Keep it safe for work and tasteful.`
+                );
 
-outputDiv.innerHTML = "Consulting AI knowledge base for <b>" + randomName + "</b>...";
+                const textContent = typeof response === 'string' ? response : (response.message?.content || JSON.stringify(response));
 
-try {
-// 2. Query Puter's free AI to dynamically write a description
-// It uses a fast default model automatically
-const response = જણાવ = await puter.ai.chat(
-Write a short, engaging creative profile and physical description for adult film star ${randomName}. Keep it safe for work and tasteful.`
-);
-
-// 3. Display the result
-outputDiv.innerHTML = <h3&gt;${randomName}</h3><p>${response}</p>`;
-
-} catch (error) {
-outputDiv.innerHTML = "Error generating profile. Make sure you sign in to Puter if prompted.";
-console.error(error);
-}
-}
-</script>
+                outputDiv.innerHTML = `<h3>${randomName}</h3><p>${textContent}</p>`;
+                
+            } catch (error) {
+                outputDiv.innerHTML = "Error generating profile. Make sure you sign in to Puter if prompted.";
+                console.error(error);
+            }
+        }
+    </script>
 </body>
 </html>
